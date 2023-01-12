@@ -1,12 +1,12 @@
 {
-	"name": "Twitter Clone",
+	"name": "miniframework",
 	"require": {
 		"php": ">= 7.0"
 	},
 	"authors": [
 		{
-			"name": "Wayster H C Melo",
-			"email": "wayster@waystermelo.com"
+			"name": "Jorge Sant Ana",
+			"email": "jorge@teste.com.br"
 		}
 	],
 	"autoload": {

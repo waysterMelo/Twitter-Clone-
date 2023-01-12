@@ -1,86 +1,26 @@
 <?php
 
-namespace App\Models;
+    namespace App\Models;
 
 use MF\Model\Model;
 
-class Usuario extends Model
-{
-    private $id;
-    private $nome;
-    private $email;
-    private $senha;
+    class Usuario extends Model{
 
 
-    public function __get($atributo)
-    {
-        return $this->$atributo;
-    }
+        private $id;
 
-    public function __set($atriuto, $value)
-    {
-        $this->$atriuto = $value;
-    }
+        private $nome;
 
-    //salvar
-    public function salvar(){
-        $query = "insert into usuarios(nome, email, senha) values (:nome , :email, :senha)";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindValue(':nome', $this->__get('nome'));
-        $stmt->bindValue(':email', $this->__get('email'));
-        $stmt->bindValue(':senha', $this->__get('senha')); // md5 hash 32 caracteres
-        $stmt->execute();
+        private $senha;
+
+        private $email;
+
+        //salvar
 
 
-        return $this;
-    }
+        //validar se um cadastro pode ser feito
 
-    //validar cadastro
-    public  function validar_cadastro(){
-        $valido = true;
 
-        if (strlen($this->__get('nome')) < 3){
-            $valido = false;
-        }
-
-        if (strlen($this->__get('email')) < 3){
-            $valido = false;
-        }
-
-        if (strlen($this->__get('senha')) < 3){
-            $valido = false;
-        }
-
-        return $valido;
+        //
 
     }
-
-    //recuperar um user by email
-    public function get_user_email(){
-        $query = "select nome, email from usuarios where email = :email";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindValue(':email', $this->__get('email'));
-        $stmt->execute();
-
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    }
-
-    //autenticar
-    public function autenticar_user(){
-        $query = "select id, nome, email from usuarios where email = :email and senha = :senha";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindValue(':email', $this->__get('email'));
-        $stmt->bindValue(':senha', $this->__get('senha'));
-        $stmt->execute();
-
-        $usuario = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-        if($usuario['id'] != '' && $usuario['nome'] != ''){
-            $this->__set('id', $usuario['id']);
-            $this->__set('nome', $usuario['nome']);
-        }
-
-        return $this;
-    }
-
-}
